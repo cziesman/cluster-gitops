@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-mesh
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: servicemesh/overlays/default
+    repoURL: https://github.com/RHC-STP-OSSM/cluster-52r9d-gitops.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
