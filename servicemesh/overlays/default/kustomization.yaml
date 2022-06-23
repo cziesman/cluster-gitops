@@ -3,3 +3,7 @@ kind: Kustomization
 
 bases:
   - ../../base
+
+resources:
+  - servicemeshmemberroll.yaml
+  - namespaces.yaml
