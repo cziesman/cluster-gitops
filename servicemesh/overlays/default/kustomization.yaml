@@ -4,6 +4,8 @@ kind: Kustomization
 bases:
   - ../../base
 
+namespace: istio-system
+
 resources:
   - servicemeshmemberroll.yaml
   - namespaces.yaml
