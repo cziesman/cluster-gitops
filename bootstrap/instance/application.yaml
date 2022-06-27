@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: servicemesh/overlays/default
-    repoURL: https://github.com/RHC-STP-OSSM/cluster-52r9d-gitops.git
+    repoURL: $REPO_URL
     targetRevision: HEAD
   syncPolicy:
     automated: {}

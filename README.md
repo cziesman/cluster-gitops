@@ -2,19 +2,27 @@
 
 Use this repository as a starting point to manage a Service Mesh on an OpenShift cluster.
 
-## Installation
+## Getting Started
 
-Provision the ArgoCD operator:
+1. Clone this example repository.
 
-```
-oc apply -k bootstrap/operator
-```
+2. Configure the example ArgoCD `Application` by providing your new repository URL `spec.source.repoURL` in the following file:
 
-Provision the ArgoCD `Application`:
+    ```
+    bootstrap/instance/application.yaml
+    ```
 
-```
-oc apply -k bootstrap/instance
-```
+3. Provision the ArgoCD operator:
+    
+    ```
+    oc apply -k bootstrap/operator
+    ```
+
+4. Provision the ArgoCD `Application`:
+
+    ```
+    oc apply -k bootstrap/instance
+    ```
 
 ## Observation
 
