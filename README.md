@@ -47,39 +47,38 @@ The following sections will describe how to manage applications deployed to the 
 
 ### Validating the bookinfo example
 
-Get your Kiali URL:
+Use Kiali to visualize bookinfo traffic:
 
 ```
-KIALI_URL=$(oc get route kiali \ -n istio-system -o jsonpath='{.spec.host}')
+KIALI_URL=$(oc get route kiali -n istio-system -o jsonpath='{.spec.host}')
 ```
+Or using openshift console: Networking->Routes->kiali
 
 Open the URL on a browser and then click on the `bookinfo` app:
 
-```
-firefox ${KIALI_URL} &
-```
 ![](images/kiali-app.png)
 
 Make sure all services are healthy:
 ![](images/kiali-app2.png)
 
-Call the `productinfo` page as done on the other labs:
+Call the `productinfo` page:
 ```
-ISTIO_GW=$(oc get route istio-ingressgateway -n istio-system -o jsonpath="{.spec.host}{.spec.path}")
+BOOK_GW=$(oc get route istio-ingressgateway -n istio-system -o jsonpath="{.spec.host}{.spec.path}")
 ```
 ```
-curl $ISTIO_GW/productpage | grep '<title>Simple Bookstore App</title>'
+curl -v $BOOK_GW/productpage | grep '<title>Simple Bookstore App</title>'
 ```
 
 Setup Kiali for traffic visualization by going to the left menu `Graph` then click on the drop down `Display` and select the `Request Percentage` and `Traffic Animation` options:
-![](../images/kiali-trafficanimation.png)
+![](images/kiali-trafficanimation.png)
 
 Now lets do a loop to generate requests to be able to watch the animation:
 ```
 while true; \
-do curl $ISTIO_GW/productpage | grep "< HTTP/1.1"; \
+do curl $BOOK_GW/productpage | grep "< HTTP/1.1"; \
 sleep 1;done
 ```
+Enter Control-C to stop the script.
 
 Switch to the graph and watch the animation, observe how the requests are mostly balanced between the three versions of the reviews service:
 ![](images/kiali-traffic-animation.png)
