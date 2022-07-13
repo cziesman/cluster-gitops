@@ -28,12 +28,23 @@ Use this repository as a starting point to manage a Service Mesh on an OpenShift
 
 The demo bootstrap initiates a default ArgoCD instance hosted in the `openshift-gitops` namespace. In this namespace a `Route` is deployed which provides a URL to the ArgoCD console.
 
-## Onboarding an Application
+=======
+## Onboarding an application to the Service Mesh
 
-Get your Kiali URL:
+The following sections will describe how to manage applications deployed to the Service Mesh with this GitOps framework.
 
-```
-KIALI_URL=$(oc get route kiali \ -n istio-system -o jsonpath='{.spec.host}')
-```
+### Requesting a new namepaces
 
-Open the URL on a browser and then click on the `bookinfo` app:
+
+
+### Adding namespaces to a ServiceMeshMemberRoll
+
+
+
+### Adding ArgoCD Applications (bookinfo example)
+
+
+
+### Validating the bookinfo example
+
+
