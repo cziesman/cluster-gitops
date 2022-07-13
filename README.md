@@ -27,3 +27,23 @@ Use this repository as a starting point to manage a Service Mesh on an OpenShift
 ## Observation
 
 The demo bootstrap initiates a default ArgoCD instance hosted in the `openshift-gitops` namespace. In this namespace a `Route` is deployed which provides a URL to the ArgoCD console.
+
+## Onboarding an application to the Service Mesh
+
+The following sections will describe how to manage applications deployed to the Service Mesh with this GitOps framework.
+
+### Requesting a new namepaces
+
+
+
+### Adding namespaces to a ServiceMeshMemberRoll
+
+
+
+### Adding ArgoCD Applications (bookinfo example)
+
+
+
+### Validating the bookinfo example
+
+
