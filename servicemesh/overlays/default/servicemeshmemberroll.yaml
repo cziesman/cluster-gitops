@@ -8,3 +8,5 @@ metadata:
 spec:
   members:
     - bookinfo
+#    - bookinfo-qa
+#    - bookinfo-test

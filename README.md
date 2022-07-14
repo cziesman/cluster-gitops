@@ -6,14 +6,15 @@ Use this repository as a starting point to manage a Service Mesh on an OpenShift
 
 1. Clone this example repository.
 
-2. Configure the example ArgoCD `Application` by providing your new repository URL `spec.source.repoURL` in the following file:
+2. Configure the example ArgoCD `Application` by providing your new repository URL `spec.source.repoURL` in the following files:
 
     ```
     bootstrap/instance/application.yaml
+    apps/application-service-mesh.yaml
     ```
 
 3. Provision the ArgoCD operator:
-    
+
     ```
     oc apply -k bootstrap/operator
     ```
@@ -35,15 +36,15 @@ The following sections will describe how to manage applications deployed to the 
 
 ### Requesting a new namepaces
 
-
+New namespaces are added by including their definitions in `servicemesh/overlays/default/namespaces.yaml`. The namespaces `bookinfo-test` and `bookinfo-qa` are commented out there.
 
 ### Adding namespaces to a ServiceMeshMemberRoll
 
-
+If you want new namespaces to be included as a member of the mesh. Add them to `servicemesh/overlays/default/servicemeshmemberroll.yaml`
 
 ### Adding ArgoCD Applications (bookinfo example)
 
-
+You can define applications in the `apps` directory. Example application definitions are available for the sample bookinfo namespaces. Uncomment the lines in `apps/kustomization.yaml` to deploy those apps.
 
 ### Validating the bookinfo example
 
@@ -91,8 +92,3 @@ If you want to inspect traffic metrics even further, go to the left menu named `
 
 In the same Kiali service view you have the ability to see more in detail metrics by jumping to Grafana, click on the blue link that reads `View in Grafana` and expect something like this:
 ![](images/grafana-metrics.png)
-
-### Validating bookinfo summary
-- We have shown how to use Kiali to validate and visualize bookinfo traffic
-- Further advanced observability features will be presented in upcoming labs
-
