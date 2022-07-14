@@ -54,14 +54,14 @@ KIALI_URL=$(oc get route kiali -n istio-system -o jsonpath='{.spec.host}')
 ```
 Or using openshift console: Networking->Routes->kiali
 
-Open the URL on a browser and then click on the `bookinfo` app:
+Open the URL on a browser and then click on the `bookinfo-test` app:
 
 ![](images/kiali-app.png)
 
 Make sure all services are healthy:
 ![](images/kiali-app2.png)
 
-Call the `productinfo` page:
+Call the `productinfo` page: export the ingress gateway URL into an env variable, use curl to invoke it:
 ```
 BOOK_GW=$(oc get route istio-ingressgateway -n istio-system -o jsonpath="{.spec.host}{.spec.path}")
 ```
@@ -69,77 +69,22 @@ BOOK_GW=$(oc get route istio-ingressgateway -n istio-system -o jsonpath="{.spec.
 curl -v $BOOK_GW/productpage | grep '<title>Simple Bookstore App</title>'
 ```
 
-Setup Kiali for traffic visualization by going to the left menu `Graph` then click on the drop down `Display` and select the `Request Percentage` and `Traffic Animation` options:
+Setup Kiali for traffic visualization by going to the left menu `Graph` then click on the drop down `Display` and select `Request Rate`, `Request Distribution`, `Namespace Boxes`, `Traffic Animation` options:
 ![](images/kiali-trafficanimation.png)
 
-Now lets do a loop to generate requests to be able to watch the animation:
+Use a simple script below to call the `productpage` every 10s:
 ```
 while true; \
-do curl $BOOK_GW/productpage | grep "< HTTP/1.1"; \
-sleep 1;done
+do curl -v $BOOK_GW/productpage | grep '<title>Simple Bookstore App</title>'; \
+sleep 10;done
 ```
 Enter Control-C to stop the script.
 
-Switch to the graph and watch the animation, observe how the requests are mostly balanced between the three versions of the reviews service:
+Switch to the graph and watch the animation, observe the statistics chosen in the graph selection:
 ![](images/kiali-traffic-animation.png)
 
 Select the reviews service by clicking on the node and observe on the right the incoming traffic:
 ![](images/kiali-incoming.png)
-
-We can redirect all traffic to the v1 of all the services by first defining a CRD `DestinationRule`:
-```
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: reviews
-spec:
-  host: reviews
-  subsets:
-  - name: v1
-    labels:
-      version: v1
-  - name: v2
-    labels:
-      version: v2
-  - name: v3
-    labels:
-      version: v3
-```
-Now apply them all:
-```
-oc apply -f destination-rule-all.yaml -n bookinfo
-```
-
-A corresponding CRD `VirtualService` is also required:
-```
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: reviews
-spec:
-  hosts:
-    - reviews
-  http:
-    - route:
-        - destination:
-            host: reviews
-            subset: v1
-```
-Now Apply:
-```
-oc apply -f virtual-service-all-v1.yaml -n bookinfo
-```
-
-The combination of the above Virtual Services and destination Rules will enforce that `bookinfo` anonymous users all use v1 of all services.
-
-Run the loop again and switch to the traffic animation:
-```
-while true; \
-do curl $BOOK_GW/productpage; \
-sleep 3;done
-```
-You should see now something like this:
-![](images/kiali-route-v1.png)
 
 If you want to inspect traffic metrics even further, go to the left menu named `Services` and select the `reviews` service, then click on the `Inbound Metrics` tab:
 ![](images/kiali-inbound-metrics.png)
@@ -148,6 +93,6 @@ In the same Kiali service view you have the ability to see more in detail metric
 ![](images/grafana-metrics.png)
 
 ### Validating bookinfo summary
-- We have shown how to use Kiali to monitor and visualize workload traffic
-- Additional target routing can be done using DestinationRule
+- We have shown how to use Kiali to validate and visualize bookinfo traffic
+- Further advanced observability features will be presented in upcoming labs
 
