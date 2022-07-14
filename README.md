@@ -86,7 +86,7 @@ Switch to the graph and watch the animation, observe how the requests are mostly
 Select the reviews service by clicking on the node and observe on the right the incoming traffic:
 ![](images/kiali-incoming.png)
 
-Now we are going to redirect all traffic to the v1 services by creating the `VirtualService` and `DestinationRules`, let start with the former which looks like:
+We can redirect all traffic to the v1 of all the services by first defining a CRD `DestinationRule`:
 ```
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -107,10 +107,10 @@ spec:
 ```
 Now apply them all:
 ```
-oc apply -f https://raw.githubusercontent.com/maistra/istio/maistra-2.1/samples/bookinfo/networking/destination-rule-all.yaml -n bookinfo
+oc apply -f destination-rule-all.yaml -n bookinfo
 ```
 
-Now lets review the corresponding `VirtualService`s:
+A corresponding CRD `VirtualService` is also required:
 ```
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -127,7 +127,7 @@ spec:
 ```
 Now Apply:
 ```
-oc apply -f https://raw.githubusercontent.com/maistra/istio/maistra-2.1/samples/bookinfo/networking/virtual-service-all-v1.yaml -n bookinfo
+oc apply -f virtual-service-all-v1.yaml -n bookinfo
 ```
 
 The combination of the above Virtual Services and destination Rules will enforce that `bookinfo` anonymous users all use v1 of all services.
