@@ -34,7 +34,7 @@ The demo bootstrap initiates a default ArgoCD instance hosted in the `openshift-
 
 The following sections will describe how to manage applications deployed to the Service Mesh with this GitOps framework.
 
-### Requesting a new namepaces
+### Requesting new namepaces
 
 New namespaces are added by including their definitions in `servicemesh/overlays/default/namespaces.yaml`. The namespaces `bookinfo-test` and `bookinfo-qa` are commented out there.
 
