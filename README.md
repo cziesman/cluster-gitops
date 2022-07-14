@@ -158,7 +158,7 @@ http:
         percent: 50 
         fixedDelay: 3s
 ```
-Now load the bookinfo app in a browser (http://$ISTIO_GW/productpage) and you should expect something along the lines:
+Now load the bookinfo app in a browser (http://$BOOK_GW/productpage) and you should expect something along the lines:
 ![](images/reviews-timeout.png)
 
 Now lets add a timeout so any requests that take longer than 1s error out:
@@ -191,7 +191,7 @@ http:
             subset: v1
 ```
 
-This is going to add an `abort` `fault` causing 500 response codes 99% of the time for the v1 reviews service. Now load the bookinfo app in a browser (http://$ISTIO_GW/productpage) and you should expect something along the lines:
+This is going to add an `abort` `fault` causing 500 response codes 99% of the time for the v1 reviews service. Now load the bookinfo app in a browser (http://$BOOK_GW/productpage) and you should expect something along the lines:
 ![](images/reviews-timeout.png)
 
 Now go to Kiali and load the graph animation again making sure you select to display `response time` and `traffic animation`:
@@ -239,4 +239,4 @@ This specifies 100 attempts in the retry and 2s timeouts in between for 5xx erro
 Before the retry mechanism you could observe a high number of operations with 500 response codes, now we should see an improvement on the service:
 ![](images/grafana-reviews-retry.png)
 
-Congratulations you have fixed the service by adding a retry mechanism.
+We have now fixed the service by adding a retry mechanism.
