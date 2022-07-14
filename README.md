@@ -135,7 +135,7 @@ The combination of the above Virtual Services and destination Rules will enforce
 Run the loop again and switch to the traffic animation:
 ```
 while true; \
-do curl $ISTIO_GW/productpage; \
+do curl $BOOK_GW/productpage; \
 sleep 3;done
 ```
 You should see now something like this:
