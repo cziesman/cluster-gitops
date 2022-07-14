@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: servicemesh/overlays/default
-    repoURL: https://github.com/davgordo/cluster-gitops-2jgs8.git
+    repoURL: $REPO_URL
     targetRevision: HEAD
     directory:
       recurse: false
