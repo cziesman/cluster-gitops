@@ -7,5 +7,3 @@ bases:
 resources:
   - servicemeshmemberroll.yaml
   - namespaces.yaml
-  - destination-rule-all.yaml
-  - virtual-service-all-v1.yaml
