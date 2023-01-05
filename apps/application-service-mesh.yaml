@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: servicemesh/overlays/default
-    repoURL: $REPO_URL
+    repoURL: https://github.com/cziesman/cluster-gitops.git
     targetRevision: HEAD
     directory:
       recurse: false
